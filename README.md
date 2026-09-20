@@ -64,7 +64,7 @@ popup is open and is stored in the current user's runtime directory.
 - Quickshell's PipeWire API finds the selected HT3 output by Bluetooth address
   and changes only that output's volume or mute state.
 - `/usr/bin/python3` runs the bundled standard-library-only helper.
-- The helper does not use `sudo`, `pkexec`, a background service, network
+- The helper requires no elevated privileges, background service, network
   access, or mutable external code.
 
 ## Develop and validate
