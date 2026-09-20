@@ -17,7 +17,7 @@ jobs:
       - name: Pin Arch Linux Archive
         run: printf 'Server = https://archive.archlinux.org/repos/2026/09/19/$repo/os/$arch\n' > /etc/pacman.d/mirrorlist
       - name: Install test tools
-        run: pacman -Syu --noconfirm git python quickshell qt5-declarative qt6-declarative
+        run: pacman -Syu --noconfirm git jq python quickshell qt5-declarative qt6-declarative
       - name: Test and compile the helper
         env:
           PYTHONDONTWRITEBYTECODE: "1"
