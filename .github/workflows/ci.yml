@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container: archlinux:base-20260823.0.578598
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Pin Arch Linux Archive
+        run: printf 'Server = https://archive.archlinux.org/repos/2026/09/19/$repo/os/$arch\n' > /etc/pacman.d/mirrorlist
+      - name: Install test tools
+        run: pacman -Syu --noconfirm git python quickshell qt5-declarative qt6-declarative
+      - name: Test and compile the helper
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: |
+          python3 -m unittest discover -s tests -v
+          python3 -m py_compile bridge.py
+      - name: Validate plugin and lint QML against Omarchy 4.0.4
+        run: |
+          git init /tmp/omarchy
+          git -C /tmp/omarchy remote add origin https://github.com/basecamp/omarchy.git
+          git -C /tmp/omarchy fetch --depth 1 origin c668141e9c42b13c80c9ca4ea108e11708c5e8a5
+          git -C /tmp/omarchy checkout --detach FETCH_HEAD
+          /tmp/omarchy/bin/omarchy-plugin-validate .
+          qmllint -I /tmp/omarchy/shell Widget.qml

@@ -1,0 +1,11 @@
+[tasks.test]
+description = "Run helper, manifest, and QML checks"
+run = """
+set -eu
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -v
+PYTHONDONTWRITEBYTECODE=1 python3 -m py_compile bridge.py
+omarchy plugin validate .
+qmllint -I /usr/share/omarchy/shell Widget.qml
+git diff --check
+"""
+
