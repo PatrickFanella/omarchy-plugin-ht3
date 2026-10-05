@@ -1,5 +1,14 @@
 # TOZO HT3 for Omarchy
 
+<a href="https://subcult.tv">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/brand/subcult-dark.svg">
+    <img src="docs/brand/subcult-light.svg" alt="SUBCULT" width="400">
+  </picture>
+</a>
+
+[SUBCULT](https://subcult.tv) · [Support on Patreon](https://patreon.com/subcult)
+
 ![TOZO HT3 controls for Omarchy, with volume, noise control and ten-band EQ](preview.png)
 
 A native Omarchy Shell / Quickshell top-bar widget with a headphone popup:
@@ -97,3 +106,12 @@ QML entry point against the installed Omarchy shell types.
 
 See [PROTOCOL.md](PROTOCOL.md) for transport evidence and provenance. This
 project is licensed under the [MIT License](LICENSE).
+
+## About SUBCULT and support
+
+Made by [Patrick Fanella](https://patrickfanella.co) as part of
+[SUBCULT](https://subcult.tv). Explore the tools and projects at
+**[subcult.tv](https://subcult.tv)**.
+
+If this plugin is useful to you, **[support SUBCULT on Patreon](https://patreon.com/subcult)**
+to help fund its development and the wider project.
