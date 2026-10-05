@@ -1,5 +1,16 @@
 # TOZO HT3 for Omarchy
 
+<a href="https://subcult.tv">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/brand/subcult-dark.svg">
+    <img src="docs/brand/subcult-light.svg" alt="SUBCULT" width="400">
+  </picture>
+</a>
+
+[SUBCULT](https://subcult.tv) · [Support on Patreon](https://patreon.com/subcult)
+
+![TOZO HT3 controls for Omarchy, with volume, noise control and ten-band EQ](preview.png)
+
 A native Omarchy Shell / Quickshell top-bar widget with a headphone popup:
 
 - HT3 playback volume and mute through PipeWire.
@@ -11,6 +22,21 @@ Requires Omarchy 4.0.4 or newer with Quickshell, BlueZ, PipeWire and
 `/usr/bin/python3`. No pip packages, elevated privileges, GTK window, network
 access or separate system service are required. Pair the HT3 using the normal
 Bluetooth settings before opening the plugin.
+
+## Screenshots and media
+
+The preview above is an edited desktop capture. It shows the connected HT3
+with battery status, playback volume, transparency mode and its hardware EQ.
+The title and background were added for presentation.
+
+<img src="docs/media/controls.png" alt="Connected HT3 popup showing 100 percent battery, 57 percent volume, ANC mode and the ten EQ bands" width="402">
+
+This close-up is an unretouched capture of the installed popup with ANC
+selected. The wallpaper and window behind it show through the transparent
+panel. Battery, volume, mode and EQ values are examples from this capture,
+not defaults. Appearance follows the active Omarchy theme.
+
+See [media notes](docs/media/README.md) for capture provenance and reuse.
 
 ## Install
 
@@ -80,3 +106,12 @@ QML entry point against the installed Omarchy shell types.
 
 See [PROTOCOL.md](PROTOCOL.md) for transport evidence and provenance. This
 project is licensed under the [MIT License](LICENSE).
+
+## About SUBCULT and support
+
+Made by [Patrick Fanella](https://patrickfanella.co) as part of
+[SUBCULT](https://subcult.tv). Explore the tools and projects at
+**[subcult.tv](https://subcult.tv)**.
+
+If this plugin is useful to you, **[support SUBCULT on Patreon](https://patreon.com/subcult)**
+to help fund its development and the wider project.
