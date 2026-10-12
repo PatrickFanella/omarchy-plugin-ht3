@@ -2,6 +2,7 @@ name: CI
 
 on:
   push:
+    branches: [main]
   pull_request:
   workflow_dispatch:
 
@@ -10,6 +11,7 @@ permissions:
 
 jobs:
   test:
+    timeout-minutes: 30
     runs-on: ubuntu-latest
     container: archlinux:base-20260823.0.578598
     steps:
