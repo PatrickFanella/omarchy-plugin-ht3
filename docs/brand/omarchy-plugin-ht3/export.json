@@ -1,0 +1,25 @@
+{
+  "studio_repository": "subculture-collective/subcult-tv",
+  "studio_revision": "6907e56c181949c1d99064dbc38ae9fe660a66d0",
+  "brand": "omarchy-plugin-ht3",
+  "files": [
+    {
+      "source": "studio/brands/omarchy-plugin-ht3/GUIDE.md",
+      "target": "docs/brand/omarchy-plugin-ht3/GUIDE.md",
+      "sha256": "80b0829d025f9466cdc0567a4c5ffff087691f0004791c64021d7c0f0df073d4",
+      "transformation": "unchanged copy"
+    },
+    {
+      "source": "studio/brands/omarchy-plugin-ht3/product/readme-lockup.png",
+      "target": "docs/brand/omarchy-plugin-ht3/readme-lockup.png",
+      "sha256": "9921c60dc53d19af0689da447ad3c3db80846590fe5a92d06f62fc2aa53fca01",
+      "transformation": "unchanged copy"
+    },
+    {
+      "source": "studio/brands/omarchy-plugin-ht3/social/avatar.png",
+      "target": "docs/brand/omarchy-plugin-ht3/avatar.png",
+      "sha256": "231015e04c2f959a5ea4e1b827b451a324d2d2f228a1d0b0f65eb75274c98f0d",
+      "transformation": "unchanged copy"
+    }
+  ]
+}
