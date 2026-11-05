@@ -1,11 +1,8 @@
 # TOZO HT3 for Omarchy
 
-<a href="https://subcult.tv">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/brand/subcult-dark.svg">
-    <img src="docs/brand/subcult-light.svg" alt="SUBCULT" width="400">
-  </picture>
-</a>
+![TOZO HT3 for Omarchy identity](docs/brand/omarchy-plugin-ht3/readme-lockup.png)
+
+
 
 [SUBCULT](https://subcult.tv) · [Support on Patreon](https://patreon.com/subcult)
 
@@ -109,9 +106,20 @@ project is licensed under the [MIT License](LICENSE).
 
 ## About SUBCULT and support
 
+<a href="https://subcult.tv">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/brand/subcult-dark.svg">
+    <img src="docs/brand/subcult-light.svg" alt="SUBCULT" width="400">
+  </picture>
+</a>
+
 Made by [Patrick Fanella](https://patrickfanella.co) as part of
 [SUBCULT](https://subcult.tv). Explore the tools and projects at
 **[subcult.tv](https://subcult.tv)**.
 
 If this plugin is useful to you, **[support SUBCULT on Patreon](https://patreon.com/subcult)**
 to help fund its development and the wider project.
+
+## Brand assets
+
+The product identity and selected public exports are recorded in [the brand handoff](docs/brand/omarchy-plugin-ht3/GUIDE.md) and [source hashes](docs/brand/omarchy-plugin-ht3/export.json). Regenerate from SUBCULT Studio with `python3 studio/scripts/export_remaining_brand.py omarchy-plugin-ht3 /path/to/this/repository`; use `--check` to verify the export without writing.
