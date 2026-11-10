@@ -2,124 +2,92 @@
 
 ![TOZO HT3 for Omarchy identity](docs/brand/omarchy-plugin-ht3/readme-lockup.png)
 
-
-
 [SUBCULT](https://subcult.tv) · [Support on Patreon](https://patreon.com/subcult)
+
+A top-bar widget for [Omarchy](https://github.com/basecamp/omarchy) that controls TOZO HT3 headphones from a popup: volume, noise mode and the headset's ten-band hardware EQ. It is for people who own an HT3 and use Omarchy, and would rather not open the phone app to switch to ANC.
+
+This is an early release (version 0.1.0). It was written against one tested HT3 and talks to the headset over a protocol worked out independently (see [PROTOCOL.md](PROTOCOL.md)); other TOZO models and firmware versions are not supported.
 
 ![TOZO HT3 controls for Omarchy, with volume, noise control and ten-band EQ](preview.png)
 
-A native Omarchy Shell / Quickshell top-bar widget with a headphone popup:
-
-- HT3 playback volume and mute through PipeWire.
-- Normal, ANC and transparency modes, with device readback.
-- Ten-band hardware EQ, -5 to +5 dB, with Apply, Flat and Revert edits.
-- Battery status, disconnect/error states, keyboard-accessible controls.
-
-Requires Omarchy 4.0.4 or newer with Quickshell, BlueZ, PipeWire and
-`/usr/bin/python3`. No pip packages, elevated privileges, GTK window, network
-access or separate system service are required. Pair the HT3 using the normal
-Bluetooth settings before opening the plugin.
-
-## Screenshots and media
-
-The preview above is an edited desktop capture. It shows the connected HT3
-with battery status, playback volume, transparency mode and its hardware EQ.
-The title and background were added for presentation.
+The preview above is an edited desktop capture with a title and background added. The close-up below is an unretouched capture of the popup with ANC selected; the battery, volume, mode and EQ values are examples, not defaults. The popup follows the active Omarchy theme.
 
 <img src="docs/media/controls.png" alt="Connected HT3 popup showing 100 percent battery, 57 percent volume, ANC mode and the ten EQ bands" width="402">
 
-This close-up is an unretouched capture of the installed popup with ANC
-selected. The wallpaper and window behind it show through the transparent
-panel. Battery, volume, mode and EQ values are examples from this capture,
-not defaults. Appearance follows the active Omarchy theme.
+## Features
 
-See [media notes](docs/media/README.md) for capture provenance and reuse.
+- Playback volume and mute for the HT3 output through PipeWire. The slider changes only the HT3, even when another device is the default output.
+- Normal, ANC and transparency modes. A mode button lights up only after the headset reports the new mode back.
+- Ten-band hardware EQ from -5 to +5 dB with Apply, Flat and Revert. Slider changes stay a draft until you press Apply, and the plugin checks that the headset confirms the new curve.
+- Battery level, plus disconnected and error states.
+- Automatic connection when one HT3 is paired; a device picker when there are several.
+- Keyboard-accessible controls.
+- Closing the popup releases the control connection without disconnecting Bluetooth audio. A per-device lock stops popups on two monitors from sending competing commands.
 
-## Install
+## Quick start
 
-Install and enable the plugin directly from its public repository:
+Requirements:
+
+- Omarchy 4.0.4 or newer with Quickshell.
+- BlueZ (`bluetoothctl`), PipeWire and `/usr/bin/python3`.
+- An HT3 already paired through the normal Bluetooth settings.
+
+No pip packages, elevated privileges, GTK window, network access or system service are needed.
+
+Install and enable the plugin:
 
 ```bash
-omarchy plugin add https://github.com/PatrickFanella/omarchy-plugin-ht3.git --enable
+omarchy plugin add https://github.com/subculture-collective/omarchy-plugin-ht3.git --enable
 ```
 
-The standard Omarchy installer clones and validates the repository, then adds
-the widget to the right side of the current bar. It does not replace the active
-bar. If the widget is already installed but disabled, enable it with:
+The installer clones and validates the repository and adds the widget to the right side of the current bar without replacing the bar. If the plugin is installed but disabled:
 
 ```bash
 omarchy plugin enable patrickfanella.ht3 right
 ```
 
-Click the headphone icon to open. One paired HT3 connects its controls
-automatically; multiple paired HT3s can be selected. Closing the popup releases
-the RFCOMM control connection without disconnecting Bluetooth audio. A per-device
-lock prevents two monitor popups from issuing competing commands.
+Click the headphone icon to open the popup.
 
-The volume slider only affects the selected HT3 output, even when another device
-is the default. EQ sliders are drafts until Apply; Flat is also a draft. Closing
-the popup discards unapplied edits. Noise mode buttons apply immediately and
-highlight only after readback. Spatial audio must be disabled in the TOZO app
-before using the hardware EQ.
+- Unapplied EQ edits, including Flat, are discarded when you close the popup.
+- Turn off spatial audio in the TOZO phone app before using the hardware EQ.
+- If the phone app is holding the control channel, close the app and reopen the popup.
+- If Bluetooth audio is disconnected, reconnect it from Omarchy's Bluetooth menu.
 
-If the phone app is holding the control channel, close it and reopen the popup.
-If Bluetooth audio is disconnected, connect it using Omarchy's Bluetooth menu.
-
-Disable with `omarchy plugin disable patrickfanella.ht3`.
-
-## Remove
-
-Remove the installed plugin and its bar entry with:
+Disable or remove the plugin:
 
 ```bash
+omarchy plugin disable patrickfanella.ht3
 omarchy plugin remove patrickfanella.ht3 --yes
 ```
 
-The plugin stores no settings, credentials, services or files outside its
-installation directory. Its per-device process lock exists only while the
-popup is open and is stored in the current user's runtime directory.
+The plugin stores no settings, credentials or files outside its installation directory. Its per-device lock lives in your user runtime directory only while the popup is open.
 
-## Permissions and external dependencies
+## How it works
 
-- `bluetoothctl` from BlueZ lists already-paired devices. The helper opens an
-  RFCOMM connection only to the selected paired device whose name identifies
-  it as a TOZO HT3.
-- Quickshell's PipeWire API finds the selected HT3 output by Bluetooth address
-  and changes only that output's volume or mute state.
-- `/usr/bin/python3` runs the bundled standard-library-only helper.
-- The helper requires no elevated privileges, background service, network
-  access, or mutable external code.
+- `bluetoothctl` lists paired devices. The bundled helper, `bridge.py`, opens a Bluetooth Classic RFCOMM connection only to the selected paired device whose name identifies it as a TOZO HT3.
+- `bridge.py` uses only the Python standard library. The widget sends it one JSON request per line (`devices`, `connect`, `refresh`, `mode`, `eq`, `disconnect`) and reads one JSON response per line.
+- Quickshell's PipeWire API finds the HT3 output by Bluetooth address and changes only that output's volume and mute state.
 
-## Develop and validate
+[PROTOCOL.md](PROTOCOL.md) documents the frame format and commands, and where the protocol facts came from.
 
-Run the complete local checks on an Omarchy system:
+## Project layout
+
+| Path | Contents |
+| --- | --- |
+| `manifest.json` | Plugin ID and bar widget entry. |
+| `Widget.qml` | Bar icon and popup. |
+| `bridge.py` | RFCOMM helper for battery, noise mode and EQ. |
+| `tests/test_bridge.py` | Helper tests. |
+| `mise.toml` | The `test` task. |
+
+## Contributing
+
+Report bugs and request features in [GitHub issues](https://github.com/subculture-collective/omarchy-plugin-ht3/issues). Send code as pull requests on GitHub against `main`. CI runs the helper tests, compiles the helper, validates the plugin and lints the QML against Omarchy 4.0.4 on every pull request. On an Omarchy system, run the same checks with:
 
 ```bash
 mise run test
 ```
 
-The suite validates the manifest, compiles and tests the helper, and lints the
-QML entry point against the installed Omarchy shell types.
+## License
 
-See [PROTOCOL.md](PROTOCOL.md) for transport evidence and provenance. This
-project is licensed under the [MIT License](LICENSE).
-
-## About SUBCULT and support
-
-<a href="https://subcult.tv">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/brand/subcult-dark.svg">
-    <img src="docs/brand/subcult-light.svg" alt="SUBCULT" width="400">
-  </picture>
-</a>
-
-Made by [Patrick Fanella](https://patrickfanella.co) as part of
-[SUBCULT](https://subcult.tv). Explore the tools and projects at
-**[subcult.tv](https://subcult.tv)**.
-
-If this plugin is useful to you, **[support SUBCULT on Patreon](https://patreon.com/subcult)**
-to help fund its development and the wider project.
-
-## Brand assets
-
-The product identity and selected public exports are recorded in [the brand handoff](docs/brand/omarchy-plugin-ht3/GUIDE.md) and [source hashes](docs/brand/omarchy-plugin-ht3/export.json). Regenerate from SUBCULT Studio with `python3 studio/scripts/export_remaining_brand.py omarchy-plugin-ht3 /path/to/this/repository`; use `--check` to verify the export without writing.
+[MIT](LICENSE). Copyright Patrick Fanella. Made as part of [SUBCULT](https://subcult.tv).
